@@ -30,4 +30,4 @@ Running the Application
 
 6 - Inform the output file path (html file)
 
-6 - python3 kics_json_to_html.py
+7 - python3 kics_json_to_html.py
