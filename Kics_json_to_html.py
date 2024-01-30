@@ -1,31 +1,32 @@
-# Script criado por Rildo Souza - rildo.ras@gmail.com
+# Script created by Rildo Souza - rildo.ras@gmail.com
 # Data: 15/01/2024
 
 import json
 from jinja2 import Template
 
-# Como sabemos que o json_data é um dicionário
-# Vamos focar nas chaves que contêm os dados que queremos exibir em HTML.
+# As we know that json_data is a dictionary
+# Let's focus on the keys that contain the data we want to display in HTML.
 
-# Informar qual é o arquivo json que iremos trabalhar
-file_path = '/home/rildo/Documents/Kubernetes/kubernetes_conf/resultados/results.json'
+# Specify which json file we will be working with ( Kics file that was created)
+file_path = '/dir/kics-example.json'
 
-# Ler e parsear o arquivo JSON
+# Read and parser the Json file
 with open(file_path, 'r') as file:
     json_data = json.load(file)
 
-# Extrair e exibir algumas informações importantes do JSON 
+
+# Extract and display some important information from the JSON
 info_keys = ['kics_version', 'files_scanned', 'lines_scanned', 'files_parsed', 'lines_parsed']
 info_data = {key: json_data[key] for key in info_keys}
 
-# Analisando o arquivo é possível assumir que os resultados que queremos estão na chave 'queries' 
+# Analyzing the file, we can assume that the results we want are in the 'queries' key
 if 'queries' in json_data:
-    queries_sample = json_data['queries'][:1]  # Mostrando apenas os primeiros 5 itens para amostra (esse número irá variar conforme o número de vulnerabilidades que aparecerem no .json)
+    queries_sample = json_data['queries'][:1]  # Displaying only the first 5 items for sampling (this number will vary depending on the number of vulnerabilities that appear in the .json)
 
-info_data, queries_sample if 'queries' in json_data else "Chave 'queries' não encontrada no JSON - validação"
+info_data, queries_sample if 'queries' in json_data else "Key 'queries' not found in JSON file- Validation"
 
 
-# Criando o template HTML para exibir os dados
+# Create a template to display the data
 html_template = """
 <!DOCTYPE html>
 <html lang="en">
@@ -87,12 +88,12 @@ html_template = """
 </html>
 """
 
-# Gerando o HTML
+# Creating a HTML file
 template = Template(html_template)
 html_content = template.render(info_data=info_data, queries=json_data['queries'])
 
-# Salvando o HTML em um arquivo
-output_html_path = '/home/rildo/Documents/Kubernetes/kubernetes_conf/resultados/results.html'
+# Save the html file
+output_html_path = '/dir/filename.html'
 with open(output_html_path, 'w') as html_file:
     html_file.write(html_content)
 
